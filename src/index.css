@@ -1,0 +1,291 @@
+/* ── Tipografías (antes de @tailwind) ── */
+@import '@fontsource/fredoka-one/400.css';
+@import '@fontsource/nunito/400.css';
+@import '@fontsource/nunito/600.css';
+@import '@fontsource/nunito/700.css';
+@import '@fontsource/nunito/800.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Variables de marca ── */
+:root {
+  --glow-pink:   #ec4899;
+  --glow-violet: #a855f7;
+  --glow-cyan:   #06b6d4;
+  --glow-soft:   #fff0f8;
+  --glow-text:   #2d1a2e;
+  --glow-muted:  #9333ea;
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  background-color: var(--glow-soft);
+  color: var(--glow-text);
+  overflow-x: hidden;
+  /* Cursor personalizado: estrella rosa */
+  cursor: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='18' fill='%23ec4899' font-family='serif'%3E✦%3C/text%3E%3C/svg%3E") 12 12, auto;
+}
+
+a, button, [role='button'] {
+  cursor: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='18' fill='%23a855f7' font-family='serif'%3E✦%3C/text%3E%3C/svg%3E") 12 12, pointer;
+}
+
+#root {
+  width: 100%;
+  min-height: 100svh;
+}
+
+/* ── Fuentes semánticas ── */
+.font-display { font-family: 'Fredoka One', cursive; }
+.font-body    { font-family: 'Nunito', sans-serif; }
+
+/* ── Gradientes de marca ── */
+.gradient-brand {
+  background: linear-gradient(135deg, #ec4899 0%, #a855f7 50%, #06b6d4 100%);
+}
+
+.gradient-soft {
+  background: linear-gradient(135deg, #fdf2f8 0%, #f5f3ff 50%, #ecfeff 100%);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #ec4899 0%, #a855f7 50%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Shimmer animado (botones, CTA) ── */
+.gradient-shimmer {
+  background: linear-gradient(
+    270deg,
+    #ec4899 0%,
+    #a855f7 25%,
+    #06b6d4 50%,
+    #a855f7 75%,
+    #ec4899 100%
+  );
+  background-size: 300% 100%;
+  animation: shimmerFlow 4s linear infinite;
+}
+
+@keyframes shimmerFlow {
+  0%   { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ── Glassmorphism ── */
+.glass {
+  background: rgba(255, 240, 248, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 240, 248, 0.4);
+}
+
+.glass-dark {
+  background: rgba(45, 26, 46, 0.6);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+}
+
+/* ── Fondo principal con mesh gradient animado ── */
+.sparkles-bg {
+  position: relative;
+  background-color: var(--glow-soft);
+  background-image:
+    radial-gradient(circle at 20% 15%, rgba(236, 72, 153, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.07) 0%, transparent 50%),
+    radial-gradient(circle at 55% 50%, rgba(6, 182, 212, 0.05) 0%, transparent 40%),
+    radial-gradient(circle, rgba(236, 72, 153, 0.3) 1px, transparent 1px),
+    radial-gradient(circle, rgba(168, 85, 247, 0.2) 1px, transparent 1px),
+    radial-gradient(circle, rgba(6, 182, 212, 0.25) 1.5px, transparent 1.5px);
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    44px 44px,
+    72px 72px,
+    96px 96px;
+  background-position:
+    0 0,
+    0 0,
+    0 0,
+    0 0,
+    22px 22px,
+    48px 48px;
+}
+
+/* Orbe animado superior izquierdo */
+.sparkles-bg::before {
+  content: '';
+  position: fixed;
+  top: -20%;
+  left: -10%;
+  width: 60vw;
+  height: 60vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.09) 0%, transparent 70%);
+  animation: orbDrift1 18s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Orbe animado inferior derecho */
+.sparkles-bg::after {
+  content: '';
+  position: fixed;
+  bottom: -20%;
+  right: -10%;
+  width: 70vw;
+  height: 70vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.08) 0%, transparent 70%);
+  animation: orbDrift2 22s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes orbDrift1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(5vw, 8vh) scale(1.1); }
+  100% { transform: translate(-3vw, 5vh) scale(0.95); }
+}
+
+@keyframes orbDrift2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-6vw, -6vh) scale(1.08); }
+  100% { transform: translate(4vw, -3vh) scale(1.03); }
+}
+
+/* ── Halo animado pulsante (logo hero) ── */
+.logo-halo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-halo::before,
+.logo-halo::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  animation: haloRing 2.5s ease-in-out infinite;
+}
+
+.logo-halo::before {
+  inset: -16px;
+  background: transparent;
+  border: 3px solid rgba(236, 72, 153, 0.4);
+  animation-delay: 0s;
+}
+
+.logo-halo::after {
+  inset: -32px;
+  background: transparent;
+  border: 2px solid rgba(168, 85, 247, 0.25);
+  animation-delay: 0.8s;
+}
+
+@keyframes haloRing {
+  0%   { transform: scale(0.9); opacity: 0.8; }
+  50%  { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.8; }
+}
+
+/* ── Bordes gradiente (Navbar scrolled) ── */
+.navbar-scrolled-border::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ec4899, #a855f7, #06b6d4, transparent);
+  opacity: 0.7;
+}
+
+/* ── Separador de sección decorativo ── */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  max-width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ec4899);
+  border-radius: 999px;
+}
+
+.section-divider::after {
+  background: linear-gradient(90deg, #ec4899, transparent);
+}
+
+/* ── Animación float para elementos decorativos ── */
+@keyframes floatA {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-12px) rotate(8deg); }
+  66%       { transform: translateY(-6px) rotate(-4deg); }
+}
+
+@keyframes floatB {
+  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+  50%       { transform: translateY(-18px) rotate(-12deg) scale(1.1); }
+}
+
+@keyframes floatC {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  40%       { transform: translateY(-8px) scale(1.15); }
+  70%       { transform: translateY(-14px) scale(0.9); }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.float-a { animation: floatA 5s ease-in-out infinite; }
+.float-b { animation: floatB 7s ease-in-out infinite; }
+.float-c { animation: floatC 4s ease-in-out infinite; }
+.spin-slow { animation: spinSlow 20s linear infinite; }
+
+/* ── Card glow border on hover ── */
+.card-glow:hover {
+  box-shadow:
+    0 0 0 2px rgba(236, 72, 153, 0.3),
+    0 20px 40px -8px rgba(236, 72, 153, 0.25),
+    0 8px 16px -4px rgba(168, 85, 247, 0.15);
+}
+
+/* ── Scroll margin para secciones ── */
+section { scroll-margin-top: 90px; }
+
+/* ── Trust pill animado ── */
+.trust-pill {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.trust-pill:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px -4px rgba(236, 72, 153, 0.3);
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
