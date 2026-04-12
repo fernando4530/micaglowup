@@ -269,6 +269,37 @@ export default function Hero() {
           💄
         </motion.p>
 
+        {/* Stats */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.95, duration: 0.6 }}
+          className="flex items-center gap-4 justify-center"
+        >
+          {[
+            { n: '13', label: 'productos' },
+            { n: '3',  label: 'marcas top' },
+          ].map(({ n, label }, i) => (
+            <>
+              <div key={label} className="flex flex-col items-center">
+                <span className="font-display text-xl gradient-text leading-tight">{n}</span>
+                <span className="font-body text-[11px] font-semibold text-glow-text/45 uppercase tracking-wider">
+                  {label}
+                </span>
+              </div>
+              {i < 1 && (
+                <span
+                  key={`sep-${i}`}
+                  className="text-glow-pink/25 font-display text-lg select-none"
+                  aria-hidden="true"
+                >
+                  ·
+                </span>
+              )}
+            </>
+          ))}
+        </motion.div>
+
         {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
