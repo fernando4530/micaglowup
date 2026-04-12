@@ -22,7 +22,7 @@ export default function Hero() {
   return (
     <section
       id="inicio"
-      className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-10 overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center pt-20 pb-10 overflow-x-hidden"
     >
       {/* ── Mesh gradient background animado ── */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -171,10 +171,12 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: 'backOut', delay: 0.1 }}
           className="relative flex items-center justify-center my-3"
         >
-          {/* Halo 1 — pink, más visible */}
+          {/* Halo 1 — pink, más visible — centrado con inset+margin para no interferir con Framer Motion scale */}
           <motion.div
             className="absolute rounded-full"
             style={{
+              inset: 0,
+              margin: 'auto',
               width: 'clamp(300px, 56vw, 560px)',
               height: 'clamp(300px, 56vw, 560px)',
               border: '3px solid rgba(236,72,153,0.65)',
@@ -188,6 +190,8 @@ export default function Hero() {
           <motion.div
             className="absolute rounded-full"
             style={{
+              inset: 0,
+              margin: 'auto',
               width: 'clamp(380px, 70vw, 700px)',
               height: 'clamp(380px, 70vw, 700px)',
               border: '2px solid rgba(168,85,247,0.45)',
@@ -201,6 +205,8 @@ export default function Hero() {
           <motion.div
             className="absolute rounded-full"
             style={{
+              inset: 0,
+              margin: 'auto',
               width: 'clamp(460px, 84vw, 840px)',
               height: 'clamp(460px, 84vw, 840px)',
               border: '1.5px solid rgba(6,182,212,0.3)',
@@ -214,6 +220,8 @@ export default function Hero() {
           <div
             className="absolute rounded-full"
             style={{
+              inset: 0,
+              margin: 'auto',
               width: 'clamp(240px, 44vw, 450px)',
               height: 'clamp(240px, 44vw, 450px)',
               background: 'radial-gradient(circle, rgba(236,72,153,0.42) 0%, rgba(168,85,247,0.22) 50%, transparent 75%)',
@@ -276,28 +284,19 @@ export default function Hero() {
           transition={{ delay: 0.95, duration: 0.6 }}
           className="flex items-center gap-4 justify-center"
         >
-          {[
-            { n: '13', label: 'productos' },
-            { n: '3',  label: 'marcas top' },
-          ].map(({ n, label }, i) => (
-            <>
-              <div key={label} className="flex flex-col items-center">
-                <span className="font-display text-xl gradient-text leading-tight">{n}</span>
-                <span className="font-body text-[11px] font-semibold text-glow-text/45 uppercase tracking-wider">
-                  {label}
-                </span>
-              </div>
-              {i < 1 && (
-                <span
-                  key={`sep-${i}`}
-                  className="text-glow-pink/25 font-display text-lg select-none"
-                  aria-hidden="true"
-                >
-                  ·
-                </span>
-              )}
-            </>
-          ))}
+          <div className="flex flex-col items-center">
+            <span className="font-display text-xl gradient-text leading-tight">13</span>
+            <span className="font-body text-[11px] font-semibold text-glow-text/45 uppercase tracking-wider">
+              productos
+            </span>
+          </div>
+          <span className="text-glow-pink/25 font-display text-lg select-none" aria-hidden="true">·</span>
+          <div className="flex flex-col items-center">
+            <span className="font-display text-xl gradient-text leading-tight">3</span>
+            <span className="font-body text-[11px] font-semibold text-glow-text/45 uppercase tracking-wider">
+              marcas top
+            </span>
+          </div>
         </motion.div>
 
         {/* CTAs */}
