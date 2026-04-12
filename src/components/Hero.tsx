@@ -235,8 +235,8 @@ export default function Hero() {
             alt="Mica Glow Up — Logo oficial"
             className="relative z-10 object-contain"
             style={{
-              width: 'clamp(220px, 38vw, 360px)',
-              height: 'clamp(220px, 38vw, 360px)',
+              width: 'clamp(260px, 45vw, 440px)',
+              height: 'clamp(260px, 45vw, 440px)',
               filter: 'drop-shadow(0 12px 40px rgba(236,72,153,0.55)) drop-shadow(0 0 16px rgba(168,85,247,0.35))',
             }}
             animate={{ y: [0, -12, 0] }}

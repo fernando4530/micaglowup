@@ -5,9 +5,9 @@ import logo from '../assets/logo.png'
 import { CONTACT } from '../data/contact'
 
 const navLinks = [
-  { label: 'Productos', id: 'productos' },
-  { label: 'Novedades', id: 'novedades' },
-  { label: 'Contacto',  id: 'contacto'  },
+  { label: 'Más Vendidos', id: 'productos' },
+  { label: 'Catálogo',     id: 'novedades' },
+  { label: 'Contacto',     id: 'contacto'  },
 ]
 
 const glassStyle = {
