@@ -157,11 +157,11 @@ export default function Hero() {
           transition={{ duration: 0.5, ease: 'backOut' }}
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full gradient-soft border border-glow-border shadow-md"
         >
-          <span style={{ fontSize: '14px', lineHeight: 1 }}>💖</span>
+          <span style={{ fontSize: '14px', lineHeight: 1 }}>💄</span>
           <span className="font-body font-extrabold text-xs uppercase tracking-[0.2em] text-glow-muted">
-            ¡Brilla, sé tú, Glow Up!
+            Maquillaje femenino · Mendoza
           </span>
-          <span style={{ fontSize: '14px', lineHeight: 1 }}>✨</span>
+          <span style={{ fontSize: '14px', lineHeight: 1 }}>💄</span>
         </motion.div>
 
         {/* ─── LOGO — protagonista absoluto ─── */}
@@ -244,7 +244,7 @@ export default function Hero() {
           className="font-display gradient-text leading-tight"
           style={{ fontSize: 'clamp(1.6rem, 4vw, 3rem)' }}
         >
-          ¡Brilla, sé tú!
+          ¡Brilla, sé tú, Glow Up!
         </motion.h1>
 
         {/* Subtítulo — compacto */}
@@ -297,57 +297,8 @@ export default function Hero() {
           </motion.a>
         </motion.div>
 
-        {/* Stats — compactos, separados con punto */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.95, duration: 0.6 }}
-          className="flex items-center gap-4 flex-wrap justify-center"
-        >
-          {[
-            { n: '500+', label: 'clientas felices' },
-            { n: '13',   label: 'productos' },
-            { n: '3',    label: 'marcas top' },
-          ].map(({ n, label }, i) => (
-            <>
-              <div key={label} className="flex flex-col items-center">
-                <span className="font-display text-xl gradient-text leading-tight">{n}</span>
-                <span className="font-body text-[11px] font-semibold text-glow-text/45 uppercase tracking-wider">
-                  {label}
-                </span>
-              </div>
-              {i < 2 && (
-                <span
-                  key={`sep-${i}`}
-                  className="text-glow-pink/25 font-display text-lg select-none"
-                  aria-hidden="true"
-                >
-                  ·
-                </span>
-              )}
-            </>
-          ))}
-        </motion.div>
       </div>
 
-      {/* Indicador de scroll */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.6 }}
-        className="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5"
-      >
-        <span className="font-body text-[10px] font-bold text-glow-muted/45 uppercase tracking-[0.25em]">
-          Descubrí más
-        </span>
-        <motion.div
-          animate={{ y: [0, 7, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-5 h-5 rounded-full border-2 border-glow-pink/25 flex items-center justify-center"
-        >
-          <div className="w-1.5 h-1.5 rounded-full bg-glow-pink/45" />
-        </motion.div>
-      </motion.div>
     </section>
   )
 }
