@@ -430,3 +430,20 @@ export const CONTACT = {
 - No usar `useEffect` para cosas que se pueden hacer con CSS
 - No agregar páginas adicionales — es una single page (todo en `App.tsx` con scroll)
 - No poner precios en el código — los precios se consultan por WhatsApp
+
+---
+
+## Lecciones aprendidas
+
+### Framer Motion — posicionamiento de elementos absolutos con animación
+Nunca usar `inset: 0; margin: auto` para centrar elementos `position: absolute` dentro de un containing block sin dimensiones explícitas. En combinación con Framer Motion genera comportamiento browser-dependent y conflictos de transforms.
+**Solución correcta:** usar `top: '50%', left: '50%', x: '-50%', y: '-50%'` en el `style` prop de `motion.div`. Para elementos sin animación Framer Motion, usar CSS puro: `transform: 'translate(-50%, -50%)'`.
+
+### Framer Motion — transforms anidados
+Anidar `scale` en un `motion.div` padre y en hijos `motion.div` con `inset: 0` crea un stack de transforms conflictivo. Mantener las animaciones de escala en un solo nivel del árbol cuando sea posible.
+
+### overflow en secciones con elementos decorativos
+Usar `overflow: hidden` completo en la `<section>` del Hero, no solo `overflow-x: hidden`. El `overflow-x: hidden` solo puede generar espacio extra vertical inesperado en algunos browsers cuando los elementos decorativos sobresalen verticalmente.
+
+### Flujo de trabajo — aprobación antes de commit
+Antes de hacer cualquier commit o push, siempre mostrar los cambios planeados y esperar confirmación explícita. Solo commitear y pushear cuando el usuario diga "aprobado, commiteá y pusheá".
