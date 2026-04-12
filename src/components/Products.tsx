@@ -98,7 +98,7 @@ export default function Products() {
         <SectionBreak />
 
         {/* ── Todo el catálogo ── */}
-        <div id="novedades" className="space-y-10">
+        <div id="novedades" className="scroll-mt-[90px] space-y-10">
           <SectionHeader
             eyebrow="Explorar · Todo"
             title="💄 Todo el catálogo"

@@ -5,9 +5,9 @@ import logo from '../assets/logo.png'
 import { CONTACT } from '../data/contact'
 
 const navLinks = [
-  { label: 'Productos',  href: '#productos' },
-  { label: 'Novedades', href: '#novedades'  },
-  { label: 'Contacto',  href: '#contacto'   },
+  { label: 'Productos', id: 'productos' },
+  { label: 'Novedades', id: 'novedades' },
+  { label: 'Contacto',  id: 'contacto'  },
 ]
 
 const glassStyle = {
@@ -26,10 +26,17 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Close menu when user scrolls away
-  useEffect(() => { if (scrolled) setMenuOpen(false) }, [scrolled])
-
   const closeMenu = () => setMenuOpen(false)
+
+  const scrollTo = (id: string) => {
+    setMenuOpen(false)
+    setTimeout(() => {
+      const el = document.getElementById(id)
+      if (!el) return
+      const top = el.getBoundingClientRect().top + window.scrollY - 80
+      window.scrollTo({ top, behavior: 'smooth' })
+    }, 300)
+  }
 
   return (
     <motion.nav
@@ -60,8 +67,8 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link, i) => (
               <motion.a
-                key={link.href}
-                href={link.href}
+                key={link.id}
+                href={`#${link.id}`}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 + i * 0.08, duration: 0.4 }}
@@ -134,6 +141,7 @@ export default function Navbar() {
       {/* Mobile dropdown */}
       <AnimatePresence>
         {menuOpen && (
+          <>
           <motion.div
             key="mobile-menu"
             initial={{ height: 0, opacity: 0 }}
@@ -145,21 +153,20 @@ export default function Navbar() {
           >
             <div className="px-4 pb-5 pt-1 flex flex-col gap-0.5">
               {navLinks.map((link, i) => (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
-                  onClick={closeMenu}
+                <motion.button
+                  key={link.id}
+                  onClick={() => scrollTo(link.id)}
                   initial={{ opacity: 0, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05, duration: 0.22 }}
-                  className="flex items-center gap-3 px-4 py-3.5 rounded-xl font-body font-bold text-[15px] text-glow-text hover:text-glow-pink hover:bg-glow-pink/5 transition-all duration-150"
+                  className="flex items-center gap-3 px-4 py-3.5 rounded-xl font-body font-bold text-[15px] text-glow-text hover:text-glow-pink hover:bg-glow-pink/5 transition-all duration-150 w-full text-left"
                 >
                   <span
                     className="w-1.5 h-1.5 rounded-full flex-shrink-0"
                     style={{ background: 'linear-gradient(135deg, #ec4899, #a855f7)' }}
                   />
                   {link.label}
-                </motion.a>
+                </motion.button>
               ))}
 
               <motion.a
@@ -176,6 +183,7 @@ export default function Navbar() {
               </motion.a>
             </div>
           </motion.div>
+          </>
         )}
       </AnimatePresence>
 
