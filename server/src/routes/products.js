@@ -17,6 +17,16 @@ router.get('/', async (req, res) => {
   }
 })
 
+// GET /api/products/all — protegido, devuelve todos (activos e inactivos)
+router.get('/all', authMiddleware, async (req, res) => {
+  try {
+    const products = await Product.find().sort({ createdAt: -1 })
+    res.json(products)
+  } catch {
+    res.status(500).json({ message: 'Error interno' })
+  }
+})
+
 // GET /api/products/:id — público
 router.get('/:id', async (req, res) => {
   try {

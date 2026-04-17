@@ -26,3 +26,18 @@ export interface NavLink {
   label: string
   href: string
 }
+
+export interface AdminProduct {
+  _id: string
+  nombre: string
+  marca: string
+  descripcion?: string
+  precio?: number
+  imagen?: string
+  stock: number
+  destacado: boolean
+  activo: boolean
+  categoria?: string
+  createdAt: string
+  updatedAt: string
+}
