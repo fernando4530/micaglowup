@@ -464,3 +464,58 @@ Antes de hacer cualquier commit o push, siempre mostrar los cambios planeados y 
 
 - `id: 'productos'` → label `'Más Vendidos'`
 - `id: 'novedades'` → label `'Catálogo'`
+
+---
+
+## Arquitectura
+
+### Stack completo
+
+- **Frontend:** React 18 + TypeScript + Vite + Tailwind v3 + Framer Motion — Vercel (`micaglowup.vercel.app`)
+- **Backend:** Node + Express + MongoDB Atlas + Mongoose — Railway (`micaglowupbackend-production.up.railway.app`)
+- **Imágenes:** Cloudinary (carpeta `mica-glow-up/products`)
+- **Auth:** JWT con expiración 7d, token guardado en `localStorage` con key `mg_admin_token`
+
+### Variables de entorno
+
+- **Backend** (Railway + `server/.env`): `MONGODB_URI`, `JWT_SECRET`, `PORT` (8081 local), `FRONTEND_URL`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`
+- **Frontend** (Vercel + `.env.local`): `VITE_API_URL` (`https://micaglowupbackend-production.up.railway.app/api` en prod, `http://localhost:8081/api` en local)
+
+### Modelo Product (MongoDB)
+
+Campos: `nombre`, `marca`, `descripcion`, `precio`, `imagen` (URL Cloudinary), `stock`, `destacado` (bool), `activo` (bool, soft delete), `categoria`, timestamps
+
+### Endpoints API
+
+- `POST /api/auth/login` — público
+- `GET /api/auth/me` — protegido
+- `GET /api/products` — público, acepta `?destacado=true`
+- `GET /api/products/all` — protegido, incluye inactivos
+- `GET /api/products/:id` — público
+- `POST /api/products` — protegido
+- `PUT /api/products/:id` — protegido
+- `DELETE /api/products/:id` — protegido, soft delete (`activo: false`)
+- `POST /api/upload` — protegido, `multipart/form-data` campo `"image"`, devuelve `{ url }`
+
+### Panel Admin
+
+- Rutas: `/admin` (protegida) y `/admin/login`
+- Archivos en `src/admin/`: `api/adminApi.ts`, `hooks/useAuth.ts`, `hooks/useProducts.ts`, `components/AdminLayout.tsx`, `components/ProductTable.tsx`, `components/ProductForm.tsx`, `pages/LoginPage.tsx`, `pages/DashboardPage.tsx`
+- `ProtectedRoute` en `App.tsx` verifica token en `localStorage`
+
+### Subida de imágenes
+
+- **Backend:** `multer` con `memoryStorage()` + `cloudinary.uploader.upload_stream()` — nunca guarda en disco
+- **Frontend:** `ImageUploader` en `ProductForm.tsx` — file picker → upload automático → preview → URL guardada en el producto
+- El header `Content-Type` **NO** se setea manualmente en `uploadImage()` — el browser lo maneja con el boundary correcto
+
+### Frontend público — conexión a API
+
+- Hook `usePublicProducts(options?)` en `src/hooks/usePublicProducts.ts`
+- Mapea campos API (español) a interfaz `Product` (inglés) que usa `ProductCard`
+- `ProductCard` maneja URLs completas (Cloudinary) y paths locales con lógica: `startsWith('http') || startsWith('/')`
+- Skeleton animado con colores de marca mientras carga, `EmptyState` si no hay productos
+
+### CORS
+
+El backend lee `FRONTEND_URL` del env para configurar CORS — siempre actualizar esta variable si cambia el origen del frontend
