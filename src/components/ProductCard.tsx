@@ -47,7 +47,13 @@ export default function ProductCard({ product, index }: ProductCardProps) {
       {/* Imagen — sin ningún overlay que afecte los colores reales */}
       <div className="relative aspect-[3/4] overflow-hidden bg-glow-soft">
         <motion.img
-          src={new URL(`../assets/products/${product.image}`, import.meta.url).href}
+          src={
+              product.image.startsWith('http') || product.image.startsWith('/')
+                ? product.image
+                : product.image
+                ? new URL(`../assets/products/${product.image}`, import.meta.url).href
+                : ''
+            }
           alt={`${product.name} de ${product.brand}`}
           className="w-full h-full object-cover"
           loading="lazy"
