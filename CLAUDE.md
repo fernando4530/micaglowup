@@ -447,3 +447,20 @@ Usar `overflow: hidden` completo en la `<section>` del Hero, no solo `overflow-x
 
 ### Flujo de trabajo — aprobación antes de commit
 Antes de hacer cualquier commit o push, siempre mostrar los cambios planeados y esperar confirmación explícita. Solo commitear y pushear cuando el usuario diga "aprobado, commiteá y pusheá".
+
+---
+
+## Decisiones técnicas
+
+### Navbar — mobile menu (resuelto)
+
+- El menú mobile usa `<motion.button>` con `onClick={() => scrollTo(id)}` — **NO usar `<a href="#">`** para navegación interna en mobile
+- La función `scrollTo` cierra el menú con `setMenuOpen(false)` y luego hace el scroll con `setTimeout` de 300ms para esperar que Framer Motion termine la animación de cierre
+- **NO agregar overlays con `fixed inset-0`** dentro del `AnimatePresence` — bloquean los clicks
+- El `useEffect` de scroll **NO debe cerrar el menú automáticamente**
+- `navLinks` usa `id` (sin `#`); los desktop links usan `href={\`#${link.id}\`}` normalmente
+
+### Navbar — labels
+
+- `id: 'productos'` → label `'Más Vendidos'`
+- `id: 'novedades'` → label `'Catálogo'`
