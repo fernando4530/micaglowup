@@ -519,3 +519,10 @@ Campos: `nombre`, `marca`, `descripcion`, `precio`, `imagen` (URL Cloudinary), `
 ### CORS
 
 El backend lee `FRONTEND_URL` del env para configurar CORS — siempre actualizar esta variable si cambia el origen del frontend
+
+### Responsive — Panel Admin
+
+- **`AdminLayout.tsx`:** en mobile (`< md`) muestra hamburger en el header que abre un drawer lateral con overlay. En desktop (`md+`) muestra sidebar fijo izquierdo. El drawer se cierra al tocar el overlay o navegar.
+- **`ProductTable.tsx`:** en mobile (`md:hidden`) muestra cards apiladas con imagen, nombre, marca, precio, stock y toggles. En desktop (`hidden md:block`) muestra la tabla completa.
+- **`ProductForm.tsx`:** grids de 2 y 3 columnas usan prefijo `sm:` — en mobile todos los campos apilan en 1 columna.
+- **`DashboardPage.tsx`:** header de acciones usa `flex-col sm:flex-row` para apilar en mobile.
