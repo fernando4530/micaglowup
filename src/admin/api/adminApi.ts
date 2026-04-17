@@ -55,6 +55,18 @@ export async function deleteProduct(id: string) {
   return handleResponse<{ message: string }>(res)
 }
 
+export async function uploadImage(file: File): Promise<string> {
+  const formData = new FormData()
+  formData.append('image', file)
+  const res = await fetch(`${BASE_URL}/upload`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${localStorage.getItem('mg_admin_token') ?? ''}` },
+    body: formData,
+  })
+  const data = await handleResponse<{ url: string }>(res)
+  return data.url
+}
+
 interface AdminProductRaw {
   _id: string
   nombre: string

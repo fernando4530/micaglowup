@@ -1,6 +1,7 @@
-import { useState, useEffect, type FormEvent } from 'react'
-import { X } from 'lucide-react'
+import { useState, useEffect, useRef, type FormEvent } from 'react'
+import { X, ImageIcon, Loader2 } from 'lucide-react'
 import type { AdminProduct } from '../../types'
+import { uploadImage } from '../api/adminApi'
 
 interface ProductFormProps {
   initial?: AdminProduct | null
@@ -81,8 +82,11 @@ export default function ProductForm({ initial, onSubmit, onClose }: ProductFormP
               <input value={form.categoria ?? ''} onChange={e => set('categoria', e.target.value)} className={inputCls} />
             </Field>
           </div>
-          <Field label="Imagen (URL)">
-            <input type="url" value={form.imagen ?? ''} onChange={e => set('imagen', e.target.value)} className={inputCls} placeholder="https://..." />
+          <Field label="Imagen">
+            <ImageUploader
+              value={form.imagen ?? ''}
+              onChange={url => set('imagen', url)}
+            />
           </Field>
           <div className="flex gap-6">
             <label className="flex items-center gap-2 text-sm font-body font-semibold text-glow-text cursor-pointer">
@@ -123,6 +127,64 @@ function Field({ label, required, children }: { label: string; required?: boolea
         {label}{required && <span className="text-glow-pink ml-0.5">*</span>}
       </label>
       {children}
+    </div>
+  )
+}
+
+type UploadStatus = 'idle' | 'uploading' | 'done' | 'error'
+
+function ImageUploader({ value, onChange }: { value: string; onChange: (url: string) => void }) {
+  const [status, setStatus] = useState<UploadStatus>('idle')
+  const [uploadError, setUploadError] = useState<string | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  async function handleFile(file: File) {
+    setStatus('uploading')
+    setUploadError(null)
+    try {
+      const url = await uploadImage(file)
+      onChange(url)
+      setStatus('done')
+    } catch (err) {
+      setUploadError(err instanceof Error ? err.message : 'Error al subir')
+      setStatus('error')
+    }
+  }
+
+  return (
+    <div className="flex items-center gap-4">
+      <div className="h-20 w-20 flex-shrink-0 rounded-xl border border-glow-border bg-glow-soft overflow-hidden flex items-center justify-center">
+        {value ? (
+          <img src={value} alt="Preview" className="h-full w-full object-cover" />
+        ) : (
+          <ImageIcon size={24} className="text-glow-border" />
+        )}
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <button
+          type="button"
+          onClick={() => inputRef.current?.click()}
+          disabled={status === 'uploading'}
+          className="px-3 py-1.5 rounded-lg border border-glow-border text-xs font-body font-bold text-glow-muted hover:border-glow-pink hover:text-glow-pink transition-colors disabled:opacity-50"
+        >
+          {status === 'uploading' ? (
+            <span className="flex items-center gap-1.5">
+              <Loader2 size={12} className="animate-spin" /> Subiendo...
+            </span>
+          ) : value ? 'Cambiar foto' : 'Elegir foto'}
+        </button>
+        {status === 'error' && <p className="text-red-500 text-xs font-body">{uploadError}</p>}
+        {status === 'done' && <p className="text-green-500 text-xs font-body">¡Imagen subida!</p>}
+      </div>
+
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={e => { const f = e.target.files?.[0]; if (f) void handleFile(f) }}
+      />
     </div>
   )
 }
