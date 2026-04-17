@@ -54,7 +54,7 @@ export default function ProductForm({ initial, onSubmit, onClose }: ProductFormP
         </div>
 
         <form onSubmit={handleSubmit} className="overflow-y-auto px-6 py-4 flex flex-col gap-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Field label="Nombre" required>
               <input value={form.nombre ?? ''} onChange={e => set('nombre', e.target.value)} required className={inputCls} />
             </Field>
@@ -65,7 +65,7 @@ export default function ProductForm({ initial, onSubmit, onClose }: ProductFormP
           <Field label="Descripción">
             <input value={form.descripcion ?? ''} onChange={e => set('descripcion', e.target.value)} className={inputCls} />
           </Field>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <Field label="Precio">
               <input
                 type="number"

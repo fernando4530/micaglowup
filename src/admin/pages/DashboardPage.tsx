@@ -41,11 +41,11 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
         <p className="text-sm font-body text-gray-500">{products.length} productos</p>
         <button
           onClick={() => setEditing(null)}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl gradient-brand text-white text-sm font-body font-bold"
+          className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl gradient-brand text-white text-sm font-body font-bold"
         >
           <Plus size={15} />
           Nuevo producto

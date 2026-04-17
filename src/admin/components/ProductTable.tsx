@@ -18,7 +18,58 @@ export default function ProductTable({ products, onEdit, onDelete, onToggle }: P
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-      <div className="overflow-x-auto">
+      {/* Vista mobile — cards apiladas */}
+      <div className="md:hidden divide-y divide-gray-100">
+        {slice.map(p => (
+          <div key={p._id} className="p-4 flex gap-3">
+            {p.imagen ? (
+              <img src={p.imagen} alt={p.nombre} className="h-10 w-10 object-cover rounded-lg flex-shrink-0" />
+            ) : (
+              <div className="h-10 w-10 rounded-lg bg-glow-border flex-shrink-0" />
+            )}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <p className="font-semibold text-sm text-glow-text truncate">{p.nombre}</p>
+                  <p className="text-xs text-gray-500">{p.marca}</p>
+                </div>
+                <div className="flex gap-1 flex-shrink-0">
+                  <button
+                    onClick={() => onEdit(p)}
+                    className="p-1.5 rounded-lg hover:bg-glow-border text-glow-muted hover:text-glow-pink transition-colors"
+                    aria-label="Editar"
+                  >
+                    <Pencil size={15} />
+                  </button>
+                  <button
+                    onClick={() => onDelete(p._id)}
+                    className="p-1.5 rounded-lg hover:bg-red-50 text-gray-400 hover:text-red-500 transition-colors"
+                    aria-label="Eliminar"
+                  >
+                    <Trash2 size={15} />
+                  </button>
+                </div>
+              </div>
+              <p className="mt-1 text-xs text-gray-600">
+                {p.precio != null ? `$${p.precio.toLocaleString('es-AR')}` : '—'} · Stock: {p.stock}
+              </p>
+              <div className="mt-2 flex items-center gap-4">
+                <span className="flex items-center gap-1.5 text-xs text-gray-500">
+                  <Toggle value={p.destacado} onChange={v => onToggle(p._id, 'destacado', v)} />
+                  Destacado
+                </span>
+                <span className="flex items-center gap-1.5 text-xs text-gray-500">
+                  <Toggle value={p.activo} onChange={v => onToggle(p._id, 'activo', v)} />
+                  Activo
+                </span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Vista desktop — tabla */}
+      <div className="hidden md:block overflow-x-auto">
         <table className="w-full text-sm font-body">
           <thead>
             <tr className="bg-gray-50 border-b border-gray-200 text-glow-text">
